@@ -1,4 +1,7 @@
+import time
 from re import search
+
+from selenium.common import ElementClickInterceptedException, NoSuchElementException
 
 from BasePage import Locators
 from selenium.webdriver.common.keys import Keys
@@ -37,6 +40,7 @@ class MainPage:
 
     def click_create_task(self):
         self.driver.find_element(*Locators.create_task_button).click()
+        return True
 
     def create_task(self):
         create_button = self.driver.find_element(*Locators.create_task_button)
@@ -45,20 +49,51 @@ class MainPage:
     def open_existing_task(self):
         self.driver.find_element(*Locators.task_in_the_task_list).click()
         self.driver.find_element(*Locators.open_task_window)
+        return True
 
     def click_update_task(self):
         self.driver.find_element(*Locators.update_task_button).click()
+        time.sleep(1)
+        return True
 
     def update_description(self):
         description = testcase_data.unique_description()
         self.driver.find_element(*Locators.description).clear()
         self.driver.find_element(*Locators.description).send_keys(description)
 
+    def update_name(self):
+        name = testcase_data.unique_valid_task_name()
+        self.driver.find_element(*Locators.name).clear()
+        self.driver.find_element(*Locators.name).send_keys(name)
+        return name
+
+    def update_params_from_dropdown(self):
+        description = testcase_data.unique_description()
+        self.driver.find_element(*Locators.description).clear()
+        self.driver.find_element(*Locators.description).send_keys(description)
+
+
     def search(self):
         names = self.driver.find_element(*Locators.names_of_task_from_task_list)
         name = names.text
         required_task = self.driver.find_element(*Locators.search_input).send_keys(name)
         return name
+
+
+
+    def search_input_clear(self):
+        self.driver.find_element(*Locators.search_input_cross).click()
+
+    def search_by_name(self,name):
+        required_task = self.driver.find_element(*Locators.search_input).send_keys(name)
+        return name
+
+
+    def search_by_long_name(self):
+        names = self.driver.find_element(*Locators.names_of_task_from_task_list)
+        name = names.text
+
+
     def first_task_from_list(self):
         names = self.driver.find_element(*Locators.names_of_task_from_task_list)
         name = names.text
@@ -70,6 +105,7 @@ class MainPage:
         status.click()
         status = status.text
         return status
+
     def first_status_from_list(self):
         status = self.driver.find_element(*Locators.status_name_from_task_list).text
         return status
@@ -107,3 +143,22 @@ class MainPage:
             return True
         else:
             return False
+
+    def is_create_button_clickable(self):
+        try:
+            MainPage.click_create_task(self)
+        except ElementClickInterceptedException:
+            return False
+
+    def is_task_exist(self):
+        try:
+            MainPage.first_task_from_list(self)
+        except NoSuchElementException:
+            return False
+        else:
+            return True
+
+    def is_search_input_clear(self):
+        input = self.driver.find_element(*Locators.search_input)
+        input = input.get_attribute("value")
+        return input

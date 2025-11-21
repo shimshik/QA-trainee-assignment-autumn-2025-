@@ -20,6 +20,7 @@ class Locators:
     open_task_window = (By.XPATH,"//div[@class = 'MuiBox-root css-1epuubg']")
     update_task_button = (By.XPATH, "//button[text() = 'Обновить']")
     search_input = (By.XPATH, "//input[@id=':r3:']")
+    search_input_cross = (By.XPATH,"//button[@class = 'MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-xz9haa']")
     search_by_status_dropdown = (By.XPATH,"//div[label[text() = 'Статус']]")
     search_by_dashboard_dropdown = (By.XPATH, "//div[label[text() = 'Доска']]")
     status_name = (By.XPATH, f"//li[@data-value = '{testcase_data.unique_status_name()}' ]")
