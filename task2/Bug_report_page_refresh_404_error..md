@@ -22,3 +22,5 @@
 **Ожидаемый результат:** Страница обновится, ее функионал будет полностью работоспособен 
 
 **Фактический результат:** Происходит ошибка 404 
+
+**Скриншот** ![Image alt](https://github.com/shimshik/QA-trainee-assignment-autumn-2025-/raw/main/task2/RefreshPage404Error.png)
